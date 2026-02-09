@@ -37,6 +37,8 @@ clean:
 
 # Start dev containers with hot reload (detached, rebuilds on changes)
 dev:
+    docker compose -f docker-compose.dev.yml down
+    docker volume rm -f resume-matcher-dev_frontend_next
     op run --account my.1password.com --env-file=op.env -- docker compose -f docker-compose.dev.yml up --build --detach
 
 # Stop dev containers
