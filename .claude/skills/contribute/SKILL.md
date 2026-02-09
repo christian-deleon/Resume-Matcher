@@ -132,6 +132,8 @@ WHEN contributing to upstream:
 
 9. RETURN to previous branch
    git checkout -
+
+10. REPORT the PR URL to the user so they can review it
 ```
 
 ## Rules
