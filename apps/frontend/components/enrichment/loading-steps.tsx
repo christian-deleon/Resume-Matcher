@@ -13,11 +13,11 @@ function LoadingStep({ message, submessage }: LoadingStepProps) {
   return (
     <div className="flex flex-col items-center justify-center h-full min-h-[400px] gap-6">
       <div className="relative">
-        <Loader2 className="w-12 h-12 animate-spin text-black" />
+        <Loader2 className="w-12 h-12 animate-spin text-foreground" />
       </div>
       <div className="text-center">
         <p className="text-xl font-mono font-bold">{message}</p>
-        {submessage && <p className="text-sm text-gray-500 mt-2 font-mono">{submessage}</p>}
+        {submessage && <p className="text-sm text-muted-foreground mt-2 font-mono">{submessage}</p>}
       </div>
     </div>
   );
@@ -68,7 +68,7 @@ export function CompleteStep({ onClose, updatedCount }: CompleteStepProps) {
       </div>
       <div className="text-center">
         <p className="text-2xl font-mono font-bold">{t('enrichment.complete.title')}</p>
-        <p className="text-sm text-gray-500 mt-2 font-mono">
+        <p className="text-sm text-muted-foreground mt-2 font-mono">
           {hasUpdatedCount
             ? updatedCount === 1
               ? t('enrichment.complete.updatedCountSingular', { count: updatedCount })
@@ -98,7 +98,7 @@ export function NoImprovementsStep({ onClose, summary }: NoImprovementsStepProps
       </div>
       <div className="text-center max-w-md">
         <p className="text-2xl font-mono font-bold">{t('enrichment.noImprovements.title')}</p>
-        <p className="text-sm text-gray-500 mt-2 font-mono">
+        <p className="text-sm text-muted-foreground mt-2 font-mono">
           {summary || t('enrichment.noImprovements.defaultDescription')}
         </p>
       </div>
@@ -125,7 +125,7 @@ export function ErrorStep({ error, onRetry, onClose }: ErrorStepProps) {
       </div>
       <div className="text-center max-w-md">
         <p className="text-xl font-mono font-bold">{t('enrichment.error.title')}</p>
-        <p className="text-sm text-red-600 mt-2 font-mono bg-red-50 p-3 border border-red-200">
+        <p className="text-sm text-red-600 mt-2 font-mono bg-red-50 dark:bg-red-950 p-3 border border-red-200">
           {error}
         </p>
       </div>

@@ -136,7 +136,7 @@ const DialogContent: React.FC<DialogContentProps> = ({ children, className }) =>
         <div
           className={cn(
             'relative w-full max-w-lg',
-            'border border-black bg-[#F0F0E8] shadow-[8px_8px_0px_0px_rgba(0,0,0,0.2)]',
+            'border border-foreground bg-background shadow-sw-lg-strong',
             'rounded-none',
             'animate-in fade-in-0 zoom-in-95 duration-200',
             className
@@ -203,7 +203,7 @@ interface DialogDescriptionProps {
 }
 
 const DialogDescription: React.FC<DialogDescriptionProps> = ({ className, children, ...props }) => (
-  <p className={cn('text-sm text-gray-600', className)} {...props}>
+  <p className={cn('text-sm text-muted-foreground', className)} {...props}>
     {children}
   </p>
 );

@@ -69,8 +69,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       // Use for: Save, Submit, Create, Primary CTA
       default: cn(
         'bg-blue-700 text-white',
-        'border border-black',
-        'shadow-[2px_2px_0px_0px_#000000]',
+        'border border-foreground',
+        'shadow-sw-sm',
         'hover:bg-blue-800',
         'hover:translate-y-[1px] hover:translate-x-[1px] hover:shadow-none',
         'active:translate-y-[2px] active:translate-x-[2px]'
@@ -80,8 +80,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       // Use for: Delete, Remove, Destroy, Dangerous actions
       destructive: cn(
         'bg-red-600 text-white',
-        'border border-black',
-        'shadow-[2px_2px_0px_0px_#000000]',
+        'border border-foreground',
+        'shadow-sw-sm',
         'hover:bg-red-700',
         'hover:translate-y-[1px] hover:translate-x-[1px] hover:shadow-none',
         'active:translate-y-[2px] active:translate-x-[2px]'
@@ -91,8 +91,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       // Use for: Download, Confirm, Complete, Positive actions
       success: cn(
         'bg-green-700 text-white',
-        'border border-black',
-        'shadow-[2px_2px_0px_0px_#000000]',
+        'border border-foreground',
+        'shadow-sw-sm',
         'hover:bg-green-800',
         'hover:translate-y-[1px] hover:translate-x-[1px] hover:shadow-none',
         'active:translate-y-[2px] active:translate-x-[2px]'
@@ -102,8 +102,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       // Use for: Reset, Clear, Undo, Caution actions
       warning: cn(
         'bg-orange-500 text-white',
-        'border border-black',
-        'shadow-[2px_2px_0px_0px_#000000]',
+        'border border-foreground',
+        'shadow-sw-sm',
         'hover:bg-orange-600',
         'hover:translate-y-[1px] hover:translate-x-[1px] hover:shadow-none',
         'active:translate-y-[2px] active:translate-x-[2px]'
@@ -112,10 +112,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       // OUTLINE - Canvas background with black border
       // Use for: Cancel, Back, Secondary actions, Navigation
       outline: cn(
-        'bg-[#F0F0E8] text-black',
-        'border border-black',
-        'shadow-[2px_2px_0px_0px_#000000]',
-        'hover:bg-[#E5E5E0]',
+        'bg-background text-foreground',
+        'border border-foreground',
+        'shadow-sw-sm',
+        'hover:bg-secondary',
         'hover:translate-y-[1px] hover:translate-x-[1px] hover:shadow-none',
         'active:translate-y-[2px] active:translate-x-[2px]'
       ),
@@ -123,10 +123,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       // SECONDARY - Panel Grey (#E5E5E0)
       // Use for: Less prominent actions, Toolbar buttons
       secondary: cn(
-        'bg-[#E5E5E0] text-black',
-        'border border-black',
-        'shadow-[2px_2px_0px_0px_#000000]',
-        'hover:bg-[#D8D8D2]',
+        'bg-secondary text-foreground',
+        'border border-foreground',
+        'shadow-sw-sm',
+        'hover:bg-accent',
         'hover:translate-y-[1px] hover:translate-x-[1px] hover:shadow-none',
         'active:translate-y-[2px] active:translate-x-[2px]'
       ),
@@ -134,16 +134,16 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       // GHOST - No background, minimal styling
       // Use for: Icon buttons, Subtle navigation, Toolbars
       ghost: cn(
-        'bg-transparent text-black',
+        'bg-transparent text-foreground',
         'border-none shadow-none',
-        'hover:bg-gray-100',
-        'active:bg-gray-200'
+        'hover:bg-accent',
+        'active:bg-muted'
       ),
 
       // LINK - Text only with underline
       // Use for: Inline links, Text navigation
       link: cn(
-        'bg-transparent text-blue-700',
+        'bg-transparent text-primary',
         'border-none shadow-none',
         'underline-offset-4 hover:underline',
         'p-0 h-auto'

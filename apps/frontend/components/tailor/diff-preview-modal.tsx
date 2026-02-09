@@ -44,14 +44,14 @@ export function DiffPreviewModal({
           }
         }}
       >
-        <DialogContent className="max-w-5xl max-h-[90vh] overflow-hidden flex flex-col p-6 bg-[#F0F0E8] border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)]">
-          <DialogHeader className="border-b-2 border-black pb-4 bg-white -mx-6 -mt-6 px-6 pt-6">
+        <DialogContent className="max-w-5xl max-h-[90vh] overflow-hidden flex flex-col p-6 bg-background border-2 border-foreground shadow-sw-lg">
+          <DialogHeader className="border-b-2 border-foreground pb-4 bg-card -mx-6 -mt-6 px-6 pt-6">
             <DialogTitle className="font-serif text-2xl font-bold uppercase tracking-tight">
               {t('tailor.missingDiffDialog.title')}
             </DialogTitle>
           </DialogHeader>
 
-          <div className="mt-6 border-2 border-black bg-white p-4 font-mono text-xs text-gray-700">
+          <div className="mt-6 border-2 border-foreground bg-card p-4 font-mono text-xs text-foreground">
             {t('tailor.missingDiffDialog.description')}
           </div>
           <div className="mt-3 flex items-center gap-2 font-mono text-xs text-amber-700">
@@ -59,7 +59,7 @@ export function DiffPreviewModal({
             <span>{t('tailor.missingDiffDialog.confirmLabel')}</span>
           </div>
 
-          <div className="flex justify-end items-center gap-3 pt-4 border-t-2 border-black bg-white -mx-6 -mb-6 px-6 py-4">
+          <div className="flex justify-end items-center gap-3 pt-4 border-t-2 border-foreground bg-card -mx-6 -mb-6 px-6 py-4">
             <Button variant="outline" onClick={onClose} className="gap-2">
               {t('common.cancel')}
             </Button>
@@ -100,19 +100,19 @@ export function DiffPreviewModal({
         }
       }}
     >
-      <DialogContent className="max-w-5xl max-h-[90vh] overflow-hidden flex flex-col p-6 bg-[#F0F0E8] border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)]">
-        <DialogHeader className="border-b-2 border-black pb-4 bg-white -mx-6 -mt-6 px-6 pt-6">
+      <DialogContent className="max-w-5xl max-h-[90vh] overflow-hidden flex flex-col p-6 bg-background border-2 border-foreground shadow-sw-lg">
+        <DialogHeader className="border-b-2 border-foreground pb-4 bg-card -mx-6 -mt-6 px-6 pt-6">
           <DialogTitle className="font-serif text-2xl font-bold uppercase tracking-tight">
             {t('tailor.diffModal.title')}
           </DialogTitle>
-          <p className="font-mono text-xs text-gray-600 mt-2">
+          <p className="font-mono text-xs text-muted-foreground mt-2">
             {'// '}
             {t('tailor.diffModal.subtitle')}
           </p>
         </DialogHeader>
 
         {/* Summary cards */}
-        <div className="border-2 border-black bg-white p-4 mt-4">
+        <div className="border-2 border-foreground bg-card p-4 mt-4">
           <div className="flex items-center gap-2 mb-3">
             <div className="w-3 h-3 bg-[#1D4ED8]"></div>
             <h3 className="font-mono text-sm font-bold uppercase tracking-wider">
@@ -166,7 +166,7 @@ export function DiffPreviewModal({
         </div>
 
         {errorMessage && (
-          <div className="mt-4 border-2 border-red-600 bg-red-50 p-3 font-mono text-xs text-red-700">
+          <div className="mt-4 border-2 border-red-600 bg-red-50 dark:bg-red-950 p-3 font-mono text-xs text-red-700">
             {errorMessage}
           </div>
         )}
@@ -273,7 +273,7 @@ export function DiffPreviewModal({
         </div>
 
         {/* Action buttons */}
-        <div className="flex justify-between items-center pt-4 border-t-2 border-black bg-white -mx-6 -mb-6 px-6 py-4">
+        <div className="flex justify-between items-center pt-4 border-t-2 border-foreground bg-card -mx-6 -mb-6 px-6 py-4">
           <Button variant="outline" onClick={onReject} className="gap-2">
             <X className="w-4 h-4" />
             {t('tailor.diffModal.rejectButton')}
@@ -322,10 +322,10 @@ interface ChangeSectionProps {
 
 function ChangeSection({ title, count, isExpanded, onToggle, children }: ChangeSectionProps) {
   return (
-    <div className="border-2 border-black bg-white">
+    <div className="border-2 border-foreground bg-card">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between p-3 hover:bg-gray-50"
+        className="w-full flex items-center justify-between p-3 hover:bg-accent"
       >
         <div className="flex items-center gap-2">
           {isExpanded ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
@@ -335,7 +335,7 @@ function ChangeSection({ title, count, isExpanded, onToggle, children }: ChangeS
         </div>
       </button>
 
-      {isExpanded && <div className="border-t-2 border-black p-4 space-y-3">{children}</div>}
+      {isExpanded && <div className="border-t-2 border-foreground p-4 space-y-3">{children}</div>}
     </div>
   );
 }
@@ -361,7 +361,7 @@ function ChangeItem({ change }: ChangeItemProps) {
   return (
     <div className={`p-3 ${typeColors[change.change_type]}`}>
       <div className="flex items-start gap-2">
-        <span className="font-mono text-xs font-bold uppercase tracking-wider text-gray-500">
+        <span className="font-mono text-xs font-bold uppercase tracking-wider text-muted-foreground">
           {typeLabels[change.change_type]}
         </span>
         <div className="flex-1">
@@ -371,7 +371,7 @@ function ChangeItem({ change }: ChangeItemProps) {
             </div>
           )}
           {change.new_value && (
-            <div className="text-gray-900 font-mono text-sm">{change.new_value}</div>
+            <div className="text-foreground font-mono text-sm">{change.new_value}</div>
           )}
         </div>
         {change.change_type === 'added' && change.confidence === 'high' && (

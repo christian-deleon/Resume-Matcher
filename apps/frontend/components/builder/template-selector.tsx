@@ -44,8 +44,8 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({ value, onCha
           onClick={() => onChange(template.id)}
           className={`group flex flex-col items-center p-3 border-2 transition-all ${
             value === template.id
-              ? 'border-blue-700 bg-blue-50 shadow-[3px_3px_0px_0px_#1D4ED8]'
-              : 'border-black bg-white hover:bg-gray-50 hover:shadow-[2px_2px_0px_0px_#000]'
+              ? 'border-blue-700 bg-blue-50 dark:bg-blue-950 shadow-sw-md-accent'
+              : 'border-foreground bg-card hover:bg-accent hover:shadow-sw-sm'
           }`}
           title={templateLabels[template.id].description}
         >
@@ -57,7 +57,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({ value, onCha
           {/* Template Name */}
           <span
             className={`font-mono text-[10px] uppercase tracking-wider font-bold ${
-              value === template.id ? 'text-blue-700' : 'text-gray-700'
+              value === template.id ? 'text-primary' : 'text-foreground'
             }`}
           >
             {templateLabels[template.id].name}
@@ -183,7 +183,7 @@ export const TemplateThumbnail: React.FC<TemplateThumbnailProps> = ({ type, isAc
           <div className={`h-0.5 ${lineColor} w-5/6 opacity-50`}></div>
         </div>
         {/* Right column (narrower) */}
-        <div className="w-1/3 border-l border-gray-200 pl-1 space-y-0.5">
+        <div className="w-1/3 border-l border-border pl-1 space-y-0.5">
           <div className={`h-0.5 ${lineColor} w-full`}></div>
           <div className={`h-0.5 ${lineColor} w-4/5 opacity-50`}></div>
           <div className="h-0.5"></div>

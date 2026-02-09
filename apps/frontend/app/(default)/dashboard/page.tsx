@@ -236,7 +236,7 @@ export default function DashboardPage() {
         return {
           text: t('dashboard.status.checking'),
           icon: <Loader2 className="w-3 h-3 animate-spin" />,
-          color: 'text-gray-500',
+          color: 'text-muted-foreground',
         };
       case 'processing':
         return {
@@ -253,7 +253,7 @@ export default function DashboardPage() {
           color: 'text-red-600',
         };
       default:
-        return { text: t('dashboard.status.pending'), icon: null, color: 'text-gray-500' };
+        return { text: t('dashboard.status.pending'), icon: null, color: 'text-muted-foreground' };
     }
   };
 
@@ -262,13 +262,13 @@ export default function DashboardPage() {
   const extraFillerCount = 5;
   // Use Tailwind classes for fillers now that we have them in config or use specific hex if needed
   // Using the hex values from before to maintain exact look, or we could map them to variants
-  const fillerPalette = ['bg-[#E5E5E0]', 'bg-[#D8D8D2]', 'bg-[#CFCFC7]', 'bg-[#E0E0D8]'];
+  const fillerPalette = ['bg-card', 'bg-secondary', 'bg-secondary', 'bg-card'];
 
   return (
     <div className="space-y-6">
       {/* Configuration Warning Banner */}
       {masterResumeId && !isLlmConfigured && !statusLoading && (
-        <div className="border-2 border-warning bg-amber-50 p-4 shadow-sw-default mb-6 flex items-center justify-between">
+        <div className="border-2 border-warning bg-amber-50 dark:bg-amber-950 p-4 shadow-sw-default mb-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <AlertTriangle className="w-5 h-5 text-warning" />
             <div>
@@ -297,10 +297,10 @@ export default function DashboardPage() {
             <Link href="/settings" className="block h-full">
               <Card
                 variant="interactive"
-                className="aspect-square h-full border-dashed border-warning bg-amber-50"
+                className="aspect-square h-full border-dashed border-warning bg-amber-50 dark:bg-amber-950"
               >
                 <div className="flex-1 flex flex-col justify-between">
-                  <div className="w-14 h-14 border-2 border-warning bg-white flex items-center justify-center mb-4">
+                  <div className="w-14 h-14 border-2 border-warning bg-card flex items-center justify-center mb-4">
                     <AlertTriangle className="w-7 h-7 text-warning" />
                   </div>
                   <div>
@@ -357,7 +357,7 @@ export default function DashboardPage() {
           >
             <div className="flex-1 flex flex-col h-full">
               <div className="flex justify-between items-start mb-6">
-                <div className="w-16 h-16 border-2 border-black bg-blue-700 text-white flex items-center justify-center">
+                <div className="w-16 h-16 border-2 border-foreground bg-blue-700 text-white flex items-center justify-center">
                   <span className="font-mono font-bold text-lg">M</span>
                 </div>
                 <div className="flex gap-1">
@@ -366,7 +366,7 @@ export default function DashboardPage() {
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-8 w-8 hover:bg-blue-100 hover:text-blue-700 z-10 rounded-none relative"
+                        className="h-8 w-8 hover:bg-blue-50 dark:hover:bg-blue-950 hover:text-blue-700 z-10 rounded-none relative"
                         onClick={handleRetryProcessing}
                         disabled={isRetrying}
                         title={t('dashboard.retryProcessing')}
@@ -398,7 +398,7 @@ export default function DashboardPage() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="text-xs h-7 rounded-none border-black"
+                      className="text-xs h-7 rounded-none border-foreground"
                       onClick={handleRetryProcessing}
                       disabled={isRetrying}
                     >
@@ -409,7 +409,7 @@ export default function DashboardPage() {
                     <Button
                       variant="outline"
                       size="sm"
-                      className="text-xs h-7 rounded-none border-red-600 text-red-600 hover:bg-red-50"
+                      className="text-xs h-7 rounded-none border-red-600 text-red-600 hover:bg-red-50 dark:hover:bg-red-950"
                       onClick={handleDeleteAndReupload}
                     >
                       {t('dashboard.deleteAndReupload')}
@@ -431,10 +431,10 @@ export default function DashboardPage() {
           >
             <div className="flex-1 flex flex-col">
               <div className="flex justify-between items-start mb-6">
-                <div className="w-12 h-12 border-2 border-black bg-white text-black flex items-center justify-center">
+                <div className="w-12 h-12 border-2 border-foreground bg-card text-foreground flex items-center justify-center">
                   <span className="font-mono font-bold">T</span>
                 </div>
-                <span className="font-mono text-xs text-gray-500 uppercase">
+                <span className="font-mono text-xs text-muted-foreground uppercase">
                   {resume.processing_status}
                 </span>
               </div>
@@ -447,7 +447,7 @@ export default function DashboardPage() {
                 </span>
               </CardTitle>
               {/* Resume filename snippet */}
-              <p className="mt-1 block font-sans text-sm font-normal text-gray-700 truncate w-full whitespace-nowrap">
+              <p className="mt-1 block font-sans text-sm font-normal text-foreground truncate w-full whitespace-nowrap">
                 {(resume.filename || t('dashboard.tailoredResume')).slice(0, 40)}
               </p>
               <CardDescription className="mt-auto pt-4 uppercase">
@@ -465,7 +465,7 @@ export default function DashboardPage() {
             <Button
               onClick={() => router.push('/tailor')}
               disabled={!isTailorEnabled}
-              className="w-20 h-20 bg-blue-700 text-white border-2 border-black shadow-sw-default hover:bg-blue-800 hover:translate-y-[2px] hover:translate-x-[2px] hover:shadow-none transition-all rounded-none"
+              className="w-20 h-20 bg-blue-700 text-white border-2 border-foreground shadow-sw-default hover:bg-blue-800 hover:translate-y-[2px] hover:translate-x-[2px] hover:shadow-none transition-all rounded-none"
             >
               <Plus className="w-8 h-8" />
             </Button>

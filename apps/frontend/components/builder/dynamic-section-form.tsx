@@ -177,7 +177,7 @@ export const DynamicSectionForm: React.FC<DynamicSectionFormProps> = ({
 
         default:
           return (
-            <div className="text-gray-500">
+            <div className="text-muted-foreground">
               {t('builder.customSections.unknownDefaultSection', { section: sectionMeta.key })}
             </div>
           );
@@ -236,7 +236,7 @@ export const DynamicSectionForm: React.FC<DynamicSectionFormProps> = ({
 
       default:
         return (
-          <div className="text-gray-500">
+          <div className="text-muted-foreground">
             {t('builder.customSections.unknownSectionType', { type: sectionMeta.sectionType })}
           </div>
         );
@@ -262,7 +262,7 @@ export const DynamicSectionForm: React.FC<DynamicSectionFormProps> = ({
 
   if (needsWrapper) {
     return (
-      <div className="space-y-6 border border-black p-6 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)]">
+      <div className="space-y-6 border border-foreground p-6 bg-card shadow-sw-default">
         <SectionHeader
           section={sectionMeta}
           onRename={handleRename}

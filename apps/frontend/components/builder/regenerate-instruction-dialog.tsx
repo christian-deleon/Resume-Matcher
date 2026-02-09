@@ -82,33 +82,35 @@ export const RegenerateInstructionDialog: React.FC<RegenerateInstructionDialogPr
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[600px] p-0 gap-0 rounded-none">
-        <DialogHeader className="p-6 pb-4 border-b border-black">
+        <DialogHeader className="p-6 pb-4 border-b border-foreground">
           <DialogTitle className="font-serif text-xl font-bold uppercase tracking-tight">
             {t('builder.regenerate.instructionDialog.title')}
           </DialogTitle>
-          <DialogDescription className="font-mono text-xs text-gray-600 mt-2">
+          <DialogDescription className="font-mono text-xs text-muted-foreground mt-2">
             {t('builder.regenerate.instructionDialog.subtitle')}
           </DialogDescription>
         </DialogHeader>
 
         <div className="p-6 space-y-6">
           {error ? (
-            <div className="border border-red-600 bg-red-50 px-4 py-3">
+            <div className="border border-red-600 bg-red-50 dark:bg-red-950 px-4 py-3">
               <p className="font-mono text-xs text-red-700">{resolveErrorMessage(error)}</p>
             </div>
           ) : null}
           {/* Selected Items Summary */}
           <div className="space-y-2">
-            <label className="font-mono text-xs uppercase tracking-wider text-gray-500">
+            <label className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
               {t('builder.regenerate.instructionDialog.selectedItems')}
             </label>
-            <div className="bg-gray-100 border border-gray-300 p-3 space-y-2 max-h-32 overflow-y-auto">
+            <div className="bg-accent border border-border p-3 space-y-2 max-h-32 overflow-y-auto">
               {selectedItems.map((item) => (
                 <div key={item.item_id} className="flex items-center gap-2 text-sm">
-                  <span className="text-gray-500">{getItemIcon(item.item_type)}</span>
+                  <span className="text-muted-foreground">{getItemIcon(item.item_type)}</span>
                   <span className="font-medium truncate">{item.title}</span>
                   {item.subtitle && (
-                    <span className="text-gray-500 text-xs truncate">| {item.subtitle}</span>
+                    <span className="text-muted-foreground text-xs truncate">
+                      | {item.subtitle}
+                    </span>
                   )}
                 </div>
               ))}
@@ -119,7 +121,7 @@ export const RegenerateInstructionDialog: React.FC<RegenerateInstructionDialogPr
           <div className="space-y-2">
             <label
               htmlFor="regenerate-instruction"
-              className="font-mono text-xs uppercase tracking-wider text-gray-500"
+              className="font-mono text-xs uppercase tracking-wider text-muted-foreground"
             >
               {t('builder.regenerate.instructionDialog.hint')}
             </label>
@@ -130,18 +132,18 @@ export const RegenerateInstructionDialog: React.FC<RegenerateInstructionDialogPr
               onKeyDown={handleKeyDown}
               maxLength={2000}
               placeholder={t('builder.regenerate.instructionDialog.placeholder')}
-              className="min-h-[120px] border-black"
+              className="min-h-[120px] border-foreground"
               disabled={isGenerating}
             />
           </div>
         </div>
 
-        <DialogFooter className="p-4 bg-[#E5E5E0] border-t border-black flex-row justify-between gap-3">
+        <DialogFooter className="p-4 bg-secondary border-t border-foreground flex-row justify-between gap-3">
           <Button
             variant="outline"
             onClick={onBack}
             disabled={isGenerating}
-            className="rounded-none border-black"
+            className="rounded-none border-foreground"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             {t('builder.regenerate.instructionDialog.backButton')}

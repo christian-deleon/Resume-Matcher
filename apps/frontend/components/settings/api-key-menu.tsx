@@ -85,21 +85,23 @@ export default function ApiKeyMenu(): React.ReactElement {
       <button
         type="button"
         onClick={handleToggle}
-        className="inline-flex items-center gap-2 rounded-md border border-purple-500/50 bg-purple-600/20 px-3 py-2 text-purple-100 transition hover:bg-purple-600/40 hover:text-white"
+        className="inline-flex items-center gap-2 border border-foreground bg-primary/20 px-3 py-2 text-foreground transition hover:bg-primary/40"
       >
         <span className="font-semibold">{t('settings.apiKeyMenu.buttonLabel')}</span>
-        <span className="text-xs text-purple-200">{maskedKey}</span>
+        <span className="text-xs text-muted-foreground">{maskedKey}</span>
         <ChevronDown className="h-4 w-4" />
       </button>
       {isOpen ? (
         <>
           <div className="fixed inset-0 z-40" onClick={handleClose} aria-hidden="true" />
-          <div className="absolute right-0 z-50 mt-2 w-80 rounded-md border border-gray-700 bg-gray-900/95 p-4 shadow-xl backdrop-blur">
-            <h3 className="text-base font-semibold text-white mb-2">
+          <div className="absolute right-0 z-50 mt-2 w-80 border border-foreground bg-card p-4 shadow-sw-card">
+            <h3 className="text-base font-semibold text-foreground mb-2">
               {t('settings.apiKeyMenu.title')}
             </h3>
-            <p className="text-xs text-gray-400 mb-3">{t('settings.apiKeyMenu.description')}</p>
-            <label htmlFor="llmKey" className="text-xs font-medium text-gray-300">
+            <p className="text-xs text-muted-foreground mb-3">
+              {t('settings.apiKeyMenu.description')}
+            </p>
+            <label htmlFor="llmKey" className="text-xs font-medium text-foreground">
               {t('settings.apiKey')}
             </label>
             <input
@@ -108,14 +110,14 @@ export default function ApiKeyMenu(): React.ReactElement {
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
               placeholder={t('settings.llmConfiguration.apiKeyPlaceholder')}
-              className="mt-1 w-full rounded-md border border-gray-700 bg-gray-800/70 px-3 py-2 text-sm text-gray-100 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-400"
+              className="mt-1 w-full border border-foreground bg-background px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             />
             {error ? <p className="mt-2 text-xs text-red-400">{error}</p> : null}
             <div className="mt-4 flex items-center justify-between gap-2">
               <button
                 type="button"
                 onClick={handleClose}
-                className="rounded-md border border-gray-700 px-3 py-2 text-xs font-semibold text-gray-300 hover:bg-gray-800/70"
+                className="border border-foreground px-3 py-2 text-xs font-semibold text-foreground hover:bg-accent"
               >
                 {t('common.cancel')}
               </button>
@@ -123,10 +125,10 @@ export default function ApiKeyMenu(): React.ReactElement {
                 type="button"
                 onClick={handleSave}
                 disabled={status === 'saving'}
-                className={`rounded-md px-4 py-2 text-xs font-semibold transition ${
+                className={`px-4 py-2 text-xs font-semibold transition ${
                   status === 'saving'
-                    ? 'bg-purple-500/40 text-purple-200 cursor-wait'
-                    : 'bg-purple-600 text-white hover:bg-purple-500'
+                    ? 'bg-primary/40 text-primary-foreground cursor-wait'
+                    : 'bg-primary text-primary-foreground hover:bg-primary/80'
                 }`}
               >
                 {status === 'saving' ? t('common.saving') : t('common.save')}

@@ -36,7 +36,7 @@ export function CoverLetterEditor({
   return (
     <div className={cn('flex flex-col h-full', className)}>
       {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b-2 border-black bg-[#F5F5F0]">
+      <div className="flex items-center justify-between p-4 border-b-2 border-foreground bg-secondary">
         <div className="flex items-center gap-2">
           <FileText className="w-4 h-4" />
           <h2 className="font-mono text-sm font-bold uppercase tracking-wider">
@@ -44,7 +44,7 @@ export function CoverLetterEditor({
           </h2>
         </div>
         <div className="flex items-center gap-3">
-          <span className="font-mono text-xs text-gray-500">
+          <span className="font-mono text-xs text-muted-foreground">
             {t('builder.contentStats.wordsChars', { wordCount, charCount })}
           </span>
           <Button size="sm" onClick={onSave} disabled={isSaving}>
@@ -63,17 +63,17 @@ export function CoverLetterEditor({
           className={cn(
             'w-full h-full min-h-[400px] p-4',
             'font-mono text-sm leading-relaxed',
-            'border-2 border-black bg-white',
+            'border-2 border-foreground bg-background',
             'resize-none',
-            'focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-offset-2',
-            'placeholder:text-gray-400'
+            'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
+            'placeholder:text-muted-foreground'
           )}
         />
       </div>
 
       {/* Footer Tips */}
-      <div className="p-4 border-t border-gray-200 bg-[#F5F5F0]">
-        <p className="font-mono text-xs text-gray-500">{t('coverLetter.editor.tip')}</p>
+      <div className="p-4 border-t border-border bg-secondary">
+        <p className="font-mono text-xs text-muted-foreground">{t('coverLetter.editor.tip')}</p>
       </div>
     </div>
   );

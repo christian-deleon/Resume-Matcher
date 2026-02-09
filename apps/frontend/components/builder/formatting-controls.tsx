@@ -146,11 +146,11 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
   };
 
   return (
-    <div className="border border-black bg-white">
+    <div className="border border-foreground bg-card">
       {/* Header - Always Visible */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between p-3 hover:bg-gray-50 transition-colors"
+        className="w-full flex items-center justify-between p-3 hover:bg-accent transition-colors"
       >
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 bg-blue-700"></div>
@@ -159,18 +159,18 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
           </span>
         </div>
         {isExpanded ? (
-          <ChevronUp className="w-4 h-4 text-gray-500" />
+          <ChevronUp className="w-4 h-4 text-muted-foreground" />
         ) : (
-          <ChevronDown className="w-4 h-4 text-gray-500" />
+          <ChevronDown className="w-4 h-4 text-muted-foreground" />
         )}
       </button>
 
       {/* Expandable Content */}
       {isExpanded && (
-        <div className="border-t border-black p-4 space-y-6">
+        <div className="border-t border-foreground p-4 space-y-6">
           {/* Template Selection */}
           <div>
-            <h4 className="font-mono text-xs font-bold uppercase tracking-wider mb-3 text-gray-600">
+            <h4 className="font-mono text-xs font-bold uppercase tracking-wider mb-3 text-muted-foreground">
               {t('builder.formatting.template')}
             </h4>
             <div className="flex gap-3">
@@ -180,8 +180,8 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
                   onClick={() => handleTemplateChange(template.id)}
                   className={`group flex flex-col items-center p-2 border-2 transition-all ${
                     settings.template === template.id
-                      ? 'border-blue-700 bg-blue-50 shadow-[2px_2px_0px_0px_#1D4ED8]'
-                      : 'border-black bg-white hover:bg-gray-50 hover:shadow-[1px_1px_0px_0px_#000]'
+                      ? 'border-blue-700 bg-blue-50 dark:bg-blue-950 shadow-sw-sm-accent'
+                      : 'border-foreground bg-card hover:bg-accent hover:shadow-sw-xs'
                   }`}
                   title={templateLabels[template.id].description}
                 >
@@ -193,7 +193,7 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
                   </div>
                   <span
                     className={`font-mono text-[9px] uppercase tracking-wider font-bold ${
-                      settings.template === template.id ? 'text-blue-700' : 'text-gray-700'
+                      settings.template === template.id ? 'text-blue-700' : 'text-foreground'
                     }`}
                   >
                     {templateLabels[template.id].name}
@@ -206,7 +206,7 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
           {/* Accent Color Selection - Visible for Modern templates */}
           {(settings.template === 'modern' || settings.template === 'modern-two-column') && (
             <div>
-              <h4 className="font-mono text-xs font-bold uppercase tracking-wider mb-3 text-gray-600">
+              <h4 className="font-mono text-xs font-bold uppercase tracking-wider mb-3 text-muted-foreground">
                 {t('builder.formatting.accentColor')}
               </h4>
               <div className="flex gap-2">
@@ -216,13 +216,13 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
                     onClick={() => handleAccentColorChange(color)}
                     className={`flex items-center gap-2 px-3 py-2 border-2 font-mono text-xs transition-all ${
                       settings.accentColor === color
-                        ? 'border-blue-700 bg-blue-50 shadow-[2px_2px_0px_0px_#1D4ED8]'
-                        : 'border-black bg-white hover:bg-gray-50'
+                        ? 'border-blue-700 bg-blue-50 dark:bg-blue-950 shadow-sw-sm-accent'
+                        : 'border-foreground bg-card hover:bg-accent'
                     }`}
                     title={t(`builder.formatting.accentColors.${color}`)}
                   >
                     <span
-                      className="w-4 h-4 border border-gray-400"
+                      className="w-4 h-4 border border-border"
                       style={{ backgroundColor: ACCENT_COLOR_MAP[color].primary }}
                     />
                     <span>{t(`builder.formatting.accentColors.${color}`)}</span>
@@ -234,7 +234,7 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
 
           {/* Page Size Selection */}
           <div>
-            <h4 className="font-mono text-xs font-bold uppercase tracking-wider mb-3 text-gray-600">
+            <h4 className="font-mono text-xs font-bold uppercase tracking-wider mb-3 text-muted-foreground">
               {t('builder.formatting.pageSize')}
             </h4>
             <div className="flex gap-2">
@@ -244,8 +244,8 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
                   onClick={() => handlePageSizeChange(size)}
                   className={`flex-1 px-3 py-2 border-2 font-mono text-xs transition-all ${
                     settings.pageSize === size
-                      ? 'border-blue-700 bg-blue-50 text-blue-700 shadow-[2px_2px_0px_0px_#1D4ED8]'
-                      : 'border-black bg-white text-gray-700 hover:bg-gray-50'
+                      ? 'border-blue-700 bg-blue-50 dark:bg-blue-950 text-blue-700 shadow-sw-sm-accent'
+                      : 'border-foreground bg-card text-foreground hover:bg-accent'
                   }`}
                   title={PAGE_SIZE_INFO[size].dimensions}
                 >
@@ -260,7 +260,7 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
 
           {/* Margins Section */}
           <div>
-            <h4 className="font-mono text-xs font-bold uppercase tracking-wider mb-3 text-gray-600">
+            <h4 className="font-mono text-xs font-bold uppercase tracking-wider mb-3 text-muted-foreground">
               {t('builder.formatting.margins')}
             </h4>
             <div className="grid grid-cols-2 gap-4">
@@ -289,7 +289,7 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
 
           {/* Spacing Section */}
           <div>
-            <h4 className="font-mono text-xs font-bold uppercase tracking-wider mb-3 text-gray-600">
+            <h4 className="font-mono text-xs font-bold uppercase tracking-wider mb-3 text-muted-foreground">
               {t('builder.formatting.spacing')}
             </h4>
             <div className="space-y-3">
@@ -313,7 +313,7 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
 
           {/* Font Size Section */}
           <div>
-            <h4 className="font-mono text-xs font-bold uppercase tracking-wider mb-3 text-gray-600">
+            <h4 className="font-mono text-xs font-bold uppercase tracking-wider mb-3 text-muted-foreground">
               {t('builder.formatting.fontSize')}
             </h4>
             <div className="space-y-3">
@@ -329,7 +329,7 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
               />
               {/* Header Font Family */}
               <div className="flex items-center gap-2">
-                <span className="font-mono text-xs w-16 text-gray-600">
+                <span className="font-mono text-xs w-16 text-muted-foreground">
                   {t('builder.formatting.headerFontFamily')}:
                 </span>
                 <div className="flex gap-1">
@@ -339,8 +339,8 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
                       onClick={() => handleHeaderFontChange(font)}
                       className={`px-2 py-1 font-mono text-xs border transition-all ${
                         settings.fontSize.headerFont === font
-                          ? 'bg-blue-700 text-white border-blue-700 shadow-[1px_1px_0px_0px_#000]'
-                          : 'bg-white text-gray-700 border-gray-300 hover:border-black'
+                          ? 'bg-blue-700 text-white border-blue-700 shadow-sw-xs'
+                          : 'bg-card text-foreground border-border hover:border-foreground'
                       }`}
                       style={{
                         fontFamily:
@@ -358,7 +358,7 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
               </div>
               {/* Body Font Family */}
               <div className="flex items-center gap-2">
-                <span className="font-mono text-xs w-16 text-gray-600">
+                <span className="font-mono text-xs w-16 text-muted-foreground">
                   {t('builder.formatting.bodyFontFamily')}:
                 </span>
                 <div className="flex gap-1">
@@ -368,8 +368,8 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
                       onClick={() => handleBodyFontChange(font)}
                       className={`px-2 py-1 font-mono text-xs border transition-all ${
                         settings.fontSize.bodyFont === font
-                          ? 'bg-blue-700 text-white border-blue-700 shadow-[1px_1px_0px_0px_#000]'
-                          : 'bg-white text-gray-700 border-gray-300 hover:border-black'
+                          ? 'bg-blue-700 text-white border-blue-700 shadow-sw-xs'
+                          : 'bg-card text-foreground border-border hover:border-foreground'
                       }`}
                       style={{
                         fontFamily:
@@ -390,7 +390,7 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
 
           {/* Options Section */}
           <div>
-            <h4 className="font-mono text-xs font-bold uppercase tracking-wider mb-3 text-gray-600">
+            <h4 className="font-mono text-xs font-bold uppercase tracking-wider mb-3 text-muted-foreground">
               {t('builder.formatting.options')}
             </h4>
             <div className="space-y-3">
@@ -399,18 +399,16 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
                 <button
                   onClick={handleCompactModeToggle}
                   className={`relative w-10 h-5 border-2 transition-all ${
-                    settings.compactMode
-                      ? 'bg-blue-700 border-blue-700'
-                      : 'bg-white border-gray-400'
+                    settings.compactMode ? 'bg-blue-700 border-blue-700' : 'bg-card border-border'
                   }`}
                 >
                   <span
                     className={`absolute top-0.5 w-3.5 h-3.5 bg-white border transition-all ${
-                      settings.compactMode ? 'left-5 border-blue-700' : 'left-0.5 border-gray-400'
+                      settings.compactMode ? 'left-5 border-blue-700' : 'left-0.5 border-border'
                     }`}
                   />
                 </button>
-                <span className="font-mono text-xs text-gray-700">
+                <span className="font-mono text-xs text-foreground">
                   {t('builder.formatting.compactMode')}
                 </span>
               </label>
@@ -422,18 +420,18 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
                   className={`relative w-10 h-5 border-2 transition-all ${
                     settings.showContactIcons
                       ? 'bg-blue-700 border-blue-700'
-                      : 'bg-white border-gray-400'
+                      : 'bg-card border-border'
                   }`}
                 >
                   <span
                     className={`absolute top-0.5 w-3.5 h-3.5 bg-white border transition-all ${
                       settings.showContactIcons
                         ? 'left-5 border-blue-700'
-                        : 'left-0.5 border-gray-400'
+                        : 'left-0.5 border-border'
                     }`}
                   />
                 </button>
-                <span className="font-mono text-xs text-gray-700">
+                <span className="font-mono text-xs text-foreground">
                   {t('builder.formatting.contactIcons')}
                 </span>
               </label>
@@ -441,12 +439,12 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
           </div>
 
           {/* Reset Button */}
-          <div className="pt-2 border-t border-gray-200 space-y-3">
+          <div className="pt-2 border-t border-border space-y-3">
             <div>
-              <h4 className="font-mono text-[10px] font-bold uppercase tracking-wider text-gray-600 mb-2">
+              <h4 className="font-mono text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">
                 {t('builder.formatting.effectiveOutput')}
               </h4>
-              <div className="font-mono text-[10px] text-gray-600 space-y-1">
+              <div className="font-mono text-[10px] text-muted-foreground space-y-1">
                 <div title={t('builder.formatting.margins')}>
                   {t('builder.formatting.effectiveMargins', {
                     top: settings.margins.top,
@@ -482,7 +480,7 @@ export const FormattingControls: React.FC<FormattingControlsProps> = ({ settings
                 </div>
               </div>
               {settings.compactMode && (
-                <div className="font-mono text-[10px] text-gray-500 mt-2">
+                <div className="font-mono text-[10px] text-muted-foreground mt-2">
                   {t('builder.formatting.compactHint')}
                 </div>
               )}
@@ -512,14 +510,14 @@ interface MarginSliderProps {
 const MarginSlider: React.FC<MarginSliderProps> = ({ label, value, onChange }) => {
   return (
     <div className="flex items-center gap-2">
-      <span className="font-mono text-xs w-12 text-gray-600">{label}:</span>
+      <span className="font-mono text-xs w-12 text-muted-foreground">{label}:</span>
       <input
         type="range"
         min={5}
         max={25}
         value={value}
         onChange={(e) => onChange(parseInt(e.target.value, 10))}
-        className="flex-1 h-1 bg-gray-200 rounded-none appearance-none cursor-pointer
+        className="flex-1 h-1 bg-muted rounded-none appearance-none cursor-pointer
                    [&::-webkit-slider-thumb]:appearance-none
                    [&::-webkit-slider-thumb]:w-3
                    [&::-webkit-slider-thumb]:h-3
@@ -532,7 +530,7 @@ const MarginSlider: React.FC<MarginSliderProps> = ({ label, value, onChange }) =
                    [&::-moz-range-thumb]:border-none
                    [&::-moz-range-thumb]:cursor-pointer"
       />
-      <span className="font-mono text-xs w-6 text-right text-gray-800">{value}</span>
+      <span className="font-mono text-xs w-6 text-right text-foreground">{value}</span>
     </div>
   );
 };
@@ -553,7 +551,7 @@ const SpacingSelector: React.FC<SpacingSelectorProps> = ({ label, value, onChang
 
   return (
     <div className="flex items-center gap-2">
-      <span className="font-mono text-xs w-16 text-gray-600">{label}:</span>
+      <span className="font-mono text-xs w-16 text-muted-foreground">{label}:</span>
       <div className="flex gap-1">
         {levels.map((level) => (
           <button
@@ -561,8 +559,8 @@ const SpacingSelector: React.FC<SpacingSelectorProps> = ({ label, value, onChang
             onClick={() => onChange(level)}
             className={`w-6 h-6 font-mono text-xs border transition-all ${
               value === level
-                ? 'bg-blue-700 text-white border-blue-700 shadow-[1px_1px_0px_0px_#000]'
-                : 'bg-white text-gray-700 border-gray-300 hover:border-black'
+                ? 'bg-blue-700 text-white border-blue-700 shadow-sw-xs'
+                : 'bg-card text-foreground border-border hover:border-foreground'
             }`}
           >
             {level}

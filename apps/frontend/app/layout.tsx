@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Space_Grotesk } from 'next/font/google';
+import { ThemeProvider } from '@/lib/context/theme-provider';
 import './(default)/css/globals.css';
 
 const spaceGrotesk = Space_Grotesk({
@@ -24,10 +25,8 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-US" className="h-full" suppressHydrationWarning>
-      <body
-        className={`${geist.variable} ${spaceGrotesk.variable} antialiased bg-[#F0F0E8] text-gray-900 min-h-full`}
-      >
-        {children}
+      <body className={`${geist.variable} ${spaceGrotesk.variable} antialiased min-h-full`}>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

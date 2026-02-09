@@ -190,25 +190,25 @@ export function ResumeUploadDialog({
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         {trigger || (
-          <Button className="rounded-none border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] hover:translate-y-[1px] hover:translate-x-[1px] hover:shadow-none transition-all">
+          <Button className="rounded-none border border-foreground shadow-sw-sm hover:translate-y-[1px] hover:translate-x-[1px] hover:shadow-none transition-all">
             <UploadIcon className="w-4 h-4 mr-2" />
             {t('dashboard.uploadResume')}
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md bg-[#F0F0E8] border border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,0.2)] p-0 gap-0 rounded-none">
-        <DialogHeader className="p-6 border-b border-black bg-white">
+      <DialogContent className="sm:max-w-md bg-background border border-foreground shadow-sw-card p-0 gap-0 rounded-none">
+        <DialogHeader className="p-6 border-b border-foreground bg-card">
           <DialogTitle className="font-serif text-2xl font-bold uppercase tracking-tight">
             {t('dashboard.uploadResume')}
           </DialogTitle>
         </DialogHeader>
 
-        <div className="p-6 bg-[#F0F0E8]">
+        <div className="p-6 bg-background">
           <div
             className={`
                             relative border-2 border-dashed p-8 text-center transition-all duration-200
-                            ${isDragging ? 'border-blue-700 bg-blue-50' : 'border-gray-400 hover:border-black hover:bg-white'}
-                            ${currentFile ? 'bg-white border-solid border-black' : ''}
+                            ${isDragging ? 'border-blue-700 bg-blue-50 dark:bg-blue-950' : 'border-muted-foreground hover:border-foreground hover:bg-card'}
+                            ${currentFile ? 'bg-card border-solid border-foreground' : ''}
                             ${!currentFile && !isRetryingProcessing ? 'cursor-pointer' : 'cursor-default'}
                             ${isRetryingProcessing ? 'opacity-70' : ''}
                         `}
@@ -230,14 +230,14 @@ export function ResumeUploadDialog({
             ) : currentFile ? (
               <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3 text-left overflow-hidden">
-                  <div className="w-10 h-10 border border-black bg-gray-100 flex items-center justify-center shrink-0">
-                    <FileIcon className="w-5 h-5 text-black" />
+                  <div className="w-10 h-10 border border-foreground bg-accent flex items-center justify-center shrink-0">
+                    <FileIcon className="w-5 h-5 text-foreground" />
                   </div>
                   <div className="min-w-0">
                     <p className="font-bold text-sm truncate max-w-[200px]">
                       {currentFile.file.name}
                     </p>
-                    <p className="font-mono text-xs text-gray-500">
+                    <p className="font-mono text-xs text-muted-foreground">
                       {formatBytes(currentFile.file.size)}
                     </p>
                   </div>
@@ -257,13 +257,13 @@ export function ResumeUploadDialog({
               </div>
             ) : (
               <div className="flex flex-col items-center py-4">
-                <div className="w-12 h-12 border border-black bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.1)] flex items-center justify-center mb-4">
-                  <UploadIcon className="w-6 h-6 text-black" />
+                <div className="w-12 h-12 border border-foreground bg-card shadow-sw-sm flex items-center justify-center mb-4">
+                  <UploadIcon className="w-6 h-6 text-foreground" />
                 </div>
                 <p className="font-bold text-lg mb-1">
                   {t('dashboard.uploadDialog.dropzoneTitle')}
                 </p>
-                <p className="font-mono text-xs text-gray-500 uppercase">
+                <p className="font-mono text-xs text-muted-foreground uppercase">
                   {t('dashboard.uploadDialog.dropzoneSubtitle')}
                 </p>
               </div>
@@ -272,7 +272,7 @@ export function ResumeUploadDialog({
 
           {/* Feedback Messages */}
           {displayErrors.length > 0 && (
-            <div className="mt-4 p-3 bg-red-50 border border-red-200 flex items-start gap-2 text-red-700 text-sm">
+            <div className="mt-4 p-3 bg-red-50 dark:bg-red-950 border border-red-200 flex items-start gap-2 text-red-700 text-sm">
               <AlertCircleIcon className="w-5 h-5 shrink-0" />
               <div>
                 {displayErrors.map((err, i) => (
@@ -283,18 +283,18 @@ export function ResumeUploadDialog({
           )}
 
           {uploadFeedback?.type === 'success' && (
-            <div className="mt-4 p-3 bg-green-50 border border-green-200 flex items-center gap-2 text-green-700 text-sm font-bold">
+            <div className="mt-4 p-3 bg-green-50 dark:bg-green-950 border border-green-200 flex items-center gap-2 text-green-700 text-sm font-bold">
               <CheckCircle2Icon className="w-5 h-5 shrink-0" />
               <p>{uploadFeedback.message}</p>
             </div>
           )}
         </div>
 
-        <div className="p-4 border-t border-black bg-white flex justify-end gap-2">
+        <div className="p-4 border-t border-foreground bg-card flex justify-end gap-2">
           {uploadFeedback?.type === 'error' && failedResumeId && (
             <Button
               variant="outline"
-              className="rounded-none border-black hover:bg-gray-100"
+              className="rounded-none border-foreground hover:bg-accent"
               onClick={handleRetryProcessing}
               disabled={isRetryingProcessing}
             >
@@ -306,7 +306,7 @@ export function ResumeUploadDialog({
           {uploadFeedback?.type === 'error' && files.length > 0 && (
             <Button
               variant="outline"
-              className="rounded-none border-black hover:bg-gray-100"
+              className="rounded-none border-foreground hover:bg-accent"
               disabled={isRetryingProcessing}
               onClick={() => {
                 if (files[0]) removeFile(files[0].id);
@@ -318,7 +318,7 @@ export function ResumeUploadDialog({
             </Button>
           )}
           <DialogClose asChild>
-            <Button variant="outline" className="rounded-none border-black hover:bg-gray-100">
+            <Button variant="outline" className="rounded-none border-foreground hover:bg-accent">
               {t('common.cancel')}
             </Button>
           </DialogClose>

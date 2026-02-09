@@ -131,10 +131,22 @@ for i in {1..30}; do
     sleep 1
 done
 
+# Sync frontend dependencies (handles new packages from mounted package.json)
+echo ""
+info "Syncing frontend dependencies..."
+cd /app/frontend
+if [ "$NODE_ENV" = "development" ]; then
+    npm install --prefer-offline 2>/dev/null && status "Dependencies synced" || warn "npm install had warnings"
+    # Clear stale Turbopack cache to prevent CSS parsing errors
+    if [ -d ".next/cache" ]; then
+        rm -rf .next/cache
+        status "Cleared Turbopack cache"
+    fi
+fi
+
 # Start frontend
 echo ""
 info "Starting frontend server on port ${FRONTEND_PORT}..."
-cd /app/frontend
 
 # Next.js uses PORT environment variable
 export PORT="${FRONTEND_PORT}"

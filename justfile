@@ -35,7 +35,7 @@ clean:
 ##################################
 # Development
 
-# Start dev containers with hot reload (detached, rebuilds on changes)
+# Start dev containers with hot reload (detached, rebuilds image on changes)
 dev:
     op run --account my.1password.com --env-file=op.env -- docker compose -f docker-compose.dev.yml up --build --detach
 

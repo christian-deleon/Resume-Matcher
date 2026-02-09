@@ -41,14 +41,10 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   /* Swiss Style Tokens */
-  --color-canvas: #f0f0e8;
-  --color-ink: #000000;
+  --color-canvas: var(--background);
+  --color-ink: var(--foreground);
   --color-success: #15803d;
   --color-warning: #f97316;
-
-  --shadow-sw-sm: 2px 2px 0px 0px #000000;
-  --shadow-sw-default: 4px 4px 0px 0px #000000;
-  --shadow-sw-card: 6px 6px 0px 0px #000000;
 
   /* Fonts */
   --font-sans: 'Geist Sans', sans-serif;
@@ -62,6 +58,21 @@
       background-position: 200% center;
     }
   }
+}
+
+/* Shadow tokens use @theme (not inline) so .dark can override them */
+@theme {
+  --shadow-sw-xs: 1px 1px 0px 0px #000000;
+  --shadow-sw-sm: 2px 2px 0px 0px #000000;
+  --shadow-sw-sm-accent: 2px 2px 0px 0px #1d4ed8;
+  --shadow-sw-md-accent: 3px 3px 0px 0px #1d4ed8;
+  --shadow-sw-default: 4px 4px 0px 0px #000000;
+  --shadow-sw-card: 6px 6px 0px 0px #000000;
+  --shadow-sw-tab: 2px -2px 0px 0px rgba(0, 0, 0, 0.1);
+  --shadow-sw-lg: 8px 8px 0px 0px rgba(0, 0, 0, 0.1);
+  --shadow-sw-lg-strong: 8px 8px 0px 0px rgba(0, 0, 0, 0.2);
+  --shadow-sw-lg-solid: 8px 8px 0px 0px rgba(0, 0, 0, 0.9);
+  --shadow-sw-xl: 12px 12px 0px 0px rgba(0, 0, 0, 0.1);
 }
 
 :root {
@@ -112,29 +123,71 @@
   --sidebar-accent-foreground: #000000;
   --sidebar-border: #000000;
   --sidebar-ring: #1d4ed8;
+
+  --grid-line-color: rgba(29, 78, 216, 0.05);
 }
 
 .dark {
-  /* Minimal Dark Mode mapping for now - Swiss Style is predominantly light/brutalist */
-  --background: #1a1a1a;
-  --foreground: #ffffff;
-  --card: #2a2a2a;
-  --card-foreground: #ffffff;
-  --popover: #2a2a2a;
-  --popover-foreground: #ffffff;
-  --primary: #3b82f6;
-  --primary-foreground: #ffffff;
-  --secondary: #2a2a2a;
-  --secondary-foreground: #ffffff;
-  --muted: #2a2a2a;
-  --muted-foreground: #a3a3a3;
-  --accent: #2a2a2a;
-  --accent-foreground: #ffffff;
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #404040;
-  --input: #2a2a2a;
-  --ring: #3b82f6;
+  color-scheme: dark;
+
+  /* Surface hierarchy: bg → card → secondary → accent (clear steps) */
+  --background: #111110;       /* Deep warm black */
+  --foreground: #eeeeec;       /* Warm near-white */
+
+  --card: #1c1c1a;             /* Elevated surface — clearly distinct from bg */
+  --card-foreground: #eeeeec;
+
+  --popover: #1c1c1a;
+  --popover-foreground: #eeeeec;
+
+  --primary: #6ea8fe;          /* Bright blue — readable on dark */
+  --primary-foreground: #111110;
+
+  --secondary: #242422;        /* Panel surface */
+  --secondary-foreground: #eeeeec;
+
+  --muted: #242422;
+  --muted-foreground: #908f87; /* Warm muted gray */
+
+  --accent: #2e2e2b;           /* Hover / active surface */
+  --accent-foreground: #eeeeec;
+
+  --destructive: #f87171;      /* Bright red for dark bg visibility */
+  --destructive-foreground: #111110;
+
+  --border: #44443e;           /* Warm visible border — Swiss brutalist */
+  --input: #1c1c1a;
+  --ring: #6ea8fe;
+
+  --chart-1: #6ea8fe;
+  --chart-2: #4ade80;
+  --chart-3: #fbbf24;
+  --chart-4: #f87171;
+  --chart-5: #eeeeec;
+
+  --sidebar: #181817;
+  --sidebar-foreground: #eeeeec;
+  --sidebar-primary: #6ea8fe;
+  --sidebar-primary-foreground: #111110;
+  --sidebar-accent: #2e2e2b;
+  --sidebar-accent-foreground: #eeeeec;
+  --sidebar-border: #44443e;
+  --sidebar-ring: #6ea8fe;
+
+  --grid-line-color: rgba(110, 168, 254, 0.06);
+
+  /* Shadow overrides — subtle white glow for dark backgrounds */
+  --shadow-sw-xs: 1px 1px 0px 0px rgba(255, 255, 255, 0.12);
+  --shadow-sw-sm: 2px 2px 0px 0px rgba(255, 255, 255, 0.12);
+  --shadow-sw-sm-accent: 2px 2px 0px 0px #6ea8fe;
+  --shadow-sw-md-accent: 3px 3px 0px 0px #6ea8fe;
+  --shadow-sw-default: 4px 4px 0px 0px rgba(255, 255, 255, 0.10);
+  --shadow-sw-card: 6px 6px 0px 0px rgba(255, 255, 255, 0.08);
+  --shadow-sw-tab: 2px -2px 0px 0px rgba(255, 255, 255, 0.06);
+  --shadow-sw-lg: 8px 8px 0px 0px rgba(255, 255, 255, 0.06);
+  --shadow-sw-lg-strong: 8px 8px 0px 0px rgba(255, 255, 255, 0.10);
+  --shadow-sw-lg-solid: 8px 8px 0px 0px rgba(255, 255, 255, 0.20);
+  --shadow-sw-xl: 12px 12px 0px 0px rgba(255, 255, 255, 0.06);
 }
 
 @layer base {
@@ -151,7 +204,9 @@
 
 @media print {
   html,
-  body {
+  html.dark,
+  body,
+  html.dark body {
     background: #ffffff !important;
     color: #000000 !important;
   }
