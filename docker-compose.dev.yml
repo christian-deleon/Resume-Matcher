@@ -1,3 +1,5 @@
+name: resume-matcher-dev
+
 services:
   resume-matcher-dev:
     build:
