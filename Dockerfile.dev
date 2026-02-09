@@ -1,0 +1,92 @@
+# Resume Matcher Docker Image (Development)
+# Hot-reload enabled via volume mounts
+
+FROM python:3.13-slim
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    NODE_ENV=development
+
+# Install system dependencies (same as production)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    # Playwright dependencies
+    libnss3 \
+    libnspr4 \
+    libatk1.0-0 \
+    libatk-bridge2.0-0 \
+    libcups2 \
+    libdrm2 \
+    libxkbcommon0 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxfixes3 \
+    libxrandr2 \
+    libgbm1 \
+    libasound2 \
+    libpango-1.0-0 \
+    libcairo2 \
+    libatspi2.0-0 \
+    libgtk-3-0 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Node.js 22.x
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# ============================================
+# Backend Setup
+# ============================================
+COPY apps/backend/pyproject.toml /app/backend/
+WORKDIR /app/backend
+RUN pip install -e .
+
+# Install Playwright system dependencies (as root)
+RUN python -m playwright install-deps chromium 2>/dev/null || true
+
+# ============================================
+# Frontend Setup
+# ============================================
+WORKDIR /app/frontend
+
+# Copy package files only — source is volume-mounted
+COPY apps/frontend/package*.json ./
+
+# Install ALL dependencies (including dev)
+RUN npm ci
+
+# ============================================
+# Startup Script
+# ============================================
+COPY docker/start.sh /app/start.sh
+RUN sed -i 's/\r$//' /app/start.sh && chmod +x /app/start.sh
+
+# ============================================
+# Data & Build Directories
+# ============================================
+RUN mkdir -p /app/backend/data /app/frontend/.next
+
+# Create non-root user
+RUN useradd -m -u 1000 appuser \
+    && chown -R appuser:appuser /app
+
+USER appuser
+
+# Install Playwright Chromium as appuser
+RUN python -m playwright install chromium
+
+# Expose ports
+EXPOSE 3000 8000
+
+# Volume for persistent data
+VOLUME ["/app/backend/data"]
+
+WORKDIR /app
+
+CMD ["/app/start.sh"]

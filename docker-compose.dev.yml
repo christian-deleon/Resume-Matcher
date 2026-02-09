@@ -1,0 +1,57 @@
+services:
+  resume-matcher-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: resume-matcher-dev
+    container_name: resume-matcher-dev
+    ports:
+      - "${DEV_FRONTEND_PORT:-3001}:3000"
+      - "${DEV_BACKEND_PORT:-8001}:8000"
+    volumes:
+      # Frontend source directories (hot reload)
+      - ./apps/frontend/app:/app/frontend/app
+      - ./apps/frontend/components:/app/frontend/components
+      - ./apps/frontend/hooks:/app/frontend/hooks
+      - ./apps/frontend/i18n:/app/frontend/i18n
+      - ./apps/frontend/lib:/app/frontend/lib
+      - ./apps/frontend/messages:/app/frontend/messages
+      - ./apps/frontend/public:/app/frontend/public
+      - ./apps/frontend/tests:/app/frontend/tests
+      # Frontend config files
+      - ./apps/frontend/tsconfig.json:/app/frontend/tsconfig.json
+      - ./apps/frontend/next.config.ts:/app/frontend/next.config.ts
+      - ./apps/frontend/postcss.config.mjs:/app/frontend/postcss.config.mjs
+      - ./apps/frontend/eslint.config.mjs:/app/frontend/eslint.config.mjs
+      - ./apps/frontend/vitest.config.ts:/app/frontend/vitest.config.ts
+      - ./apps/frontend/vitest.setup.ts:/app/frontend/vitest.setup.ts
+      # Backend source (hot reload via uvicorn --reload)
+      - ./apps/backend/app:/app/backend/app
+      # Protect container-installed deps from host mounts
+      - frontend_node_modules:/app/frontend/node_modules
+      - frontend_next:/app/frontend/.next
+      # Persistent data (separate from production volume)
+      - resume-data-dev:/app/backend/data
+    environment:
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true
+      - FRONTEND_PORT=${DEV_FRONTEND_PORT:-3001}
+      - BACKEND_PORT=${DEV_BACKEND_PORT:-8001}
+      # LLM Configuration
+      - LLM_PROVIDER=${LLM_PROVIDER:-openai}
+      - LLM_MODEL=${LLM_MODEL:-}
+      - LLM_API_KEY=${LLM_API_KEY:-}
+      - LLM_API_BASE=${LLM_API_BASE:-}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+volumes:
+  frontend_node_modules:
+  frontend_next:
+  resume-data-dev:
+    driver: local
