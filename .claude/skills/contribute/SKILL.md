@@ -1,6 +1,8 @@
 ---
 name: contribute
 description: Workflow for contributing changes (bug fixes, enhancements, features) to the upstream repo via a clean topic branch and PR.
+argument-hint: "[commit hash or description of changes to contribute]"
+disable-model-invocation: true
 ---
 
 # Contribute to Upstream
@@ -14,7 +16,7 @@ description: Workflow for contributing changes (bug fixes, enhancements, feature
 /contribute commit abc123           — contribute a specific commit by hash
 ```
 
-When arguments are provided, use them to identify which committed changes to include.
+When `$ARGUMENTS` is provided, use it to identify which committed changes to include.
 Search the git log for commits matching the description and scope the
 contribution to ONLY those commits.
 

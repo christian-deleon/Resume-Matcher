@@ -1,6 +1,8 @@
 ---
 name: commit
 description: Categorize all uncommitted changes into logical buckets and commit each one separately using conventional commits.
+argument-hint: "[description of changes to commit]"
+disable-model-invocation: true
 ---
 
 # Smart Commit
@@ -13,7 +15,7 @@ description: Categorize all uncommitted changes into logical buckets and commit 
 /commit the dialog fix — only commit changes matching the description
 ```
 
-When arguments are provided, scope the analysis to only changes matching
+When `$ARGUMENTS` is provided, scope the analysis to only changes matching
 the description. If the description is vague or matches multiple unrelated
 changes, ask the user to clarify.
 
