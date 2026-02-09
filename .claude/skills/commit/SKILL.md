@@ -78,12 +78,34 @@ Only ask the user if the description provided is too vague to determine scope.
 
 Use conventional commits: `<type>(<scope>): <description>`
 
+**Subject line only** (no conversation context about the change):
 - `fix(backend): handle missing resume fields in parser`
-- `feat(frontend): add job description paste support`
-- `refactor(services): simplify LLM prompt builder`
 - `chore: update .gitignore for local claude config`
-- `style(frontend): fix button alignment on dashboard`
-- `docs: update API endpoint documentation`
+
+**Subject + body** (conversation context exists about the issue, feature, or motivation):
+When the conversation leading up to `/commit` discusses an issue, feature,
+bug, or any context explaining *why* the change was made, include a commit
+body separated by a blank line. Pull the context from the conversation —
+do not ask the user to re-explain.
+
+```
+fix(backend): handle missing resume fields in parser
+
+The parser crashed when optional fields (certifications, volunteer) were
+absent from uploaded PDFs. Default to empty lists so downstream enrichment
+can proceed without errors.
+```
+
+```
+feat(frontend): add job description paste support
+
+Users needed a way to paste raw job description text instead of only
+uploading files. Adds a textarea to the tailor page with paste detection
+and auto-formatting.
+```
+
+Keep the body concise (2-4 sentences). Focus on *why* the change was made
+and any non-obvious decisions, not a line-by-line summary of *what* changed.
 
 ### Scope Guidelines
 

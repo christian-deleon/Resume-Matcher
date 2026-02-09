@@ -120,6 +120,13 @@ WHEN contributing to upstream:
    - Source: origin/<type>/<short-description>
    - Title: Short, under 70 characters
    - Body: Use the appropriate PR template below
+   - POPULATE the PR body from commit message bodies:
+     Read the full commit messages (git log --format=%B) for the
+     cherry-picked commits. If commits have body text beyond the
+     subject line, use that context to fill in the Summary,
+     Root Cause / Motivation, and Changes sections of the template.
+     If commits only have subject lines, fill in the template from
+     the diff and conversation context instead.
    - ALWAYS use --draft so the user can review before marking ready
    - Use: gh pr create --repo srbhr/Resume-Matcher --draft
 
