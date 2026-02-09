@@ -7,6 +7,10 @@ default:
 ##################################
 # Production
 
+# Build production image
+build:
+    docker compose build
+
 # Start production containers (detached)
 run:
     op run --account my.1password.com --env-file=op.env -- docker compose up --detach
