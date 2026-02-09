@@ -138,7 +138,11 @@ cd /app/frontend
 
 # Next.js uses PORT environment variable
 export PORT="${FRONTEND_PORT}"
-npm start &
+if [ "$NODE_ENV" = "development" ]; then
+    npm run dev &
+else
+    npm start &
+fi
 FRONTEND_PID=$!
 
 echo ""
