@@ -39,7 +39,20 @@ Examples:
 
 ## Task Runner
 
-Always prefer using `just` recipes from the `justfile` when available. Run `just --list` to see available recipes before falling back to raw commands.
+**NEVER run `docker compose` commands directly.** Always use the corresponding `just` recipe instead. The justfile handles environment injection (1Password via `op run`) and correct compose file selection that raw commands would miss.
+
+| Instead of | Use |
+|---|---|
+| `docker compose up` | `just run` |
+| `docker compose down` | `just stop` |
+| `docker compose logs -f` | `just logs` |
+| `docker compose down --volumes` | `just clean` |
+| `docker compose -f docker-compose.dev.yml up --build` | `just dev` |
+| `docker compose -f docker-compose.dev.yml down` | `just dev-stop` |
+| `docker compose -f docker-compose.dev.yml logs -f` | `just dev-logs` |
+| `docker compose -f docker-compose.dev.yml down --remove-orphans` | `just dev-clean` |
+
+Run `just --list` to see all available recipes before falling back to raw commands.
 
 ## Remotes
 
