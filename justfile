@@ -39,7 +39,7 @@ clean:
 dev:
     docker compose -f docker-compose.dev.yml down
     docker volume rm -f resume-matcher-dev_frontend_next
-    op run --account my.1password.com --env-file=op.env -- docker compose -f docker-compose.dev.yml up --build --detach
+    op run --account my.1password.com --env-file=op.dev.env -- docker compose -f docker-compose.dev.yml up --build --detach
 
 # Stop dev containers
 dev-stop:
@@ -55,7 +55,7 @@ dev-open:
 
 # Remove dev containers (preserves volumes with personal data)
 dev-clean:
-    docker compose -f docker-compose.dev.yml down --remove-orphans
+    docker compose -f docker-compose.dev.yml down --volumes --remove-orphans
 
 ##################################
 # Cleanup
