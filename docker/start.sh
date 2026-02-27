@@ -136,8 +136,11 @@ echo ""
 info "Starting frontend server on port ${FRONTEND_PORT}..."
 cd /app/frontend
 
-# Next.js uses PORT environment variable
+# Next.js standalone uses PORT and HOSTNAME environment variables.
+# HOSTNAME must be 0.0.0.0 so the frontend is reachable at localhost
+# from within the container (required by Playwright for PDF rendering).
 export PORT="${FRONTEND_PORT}"
+export HOSTNAME="0.0.0.0"
 if [ ! -f "server.js" ]; then
     error "Missing frontend standalone server.js. Rebuild the Docker image."
     exit 1
