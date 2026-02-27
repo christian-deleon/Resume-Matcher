@@ -299,6 +299,7 @@ ALLOWED_TYPES = {
     "application/pdf",
     "application/msword",
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "text/markdown",
 }
 MAX_FILE_SIZE = 4 * 1024 * 1024  # 4MB
 
@@ -314,7 +315,7 @@ async def upload_resume(file: UploadFile = File(...)) -> ResumeUploadResponse:
     if file.content_type not in ALLOWED_TYPES:
         raise HTTPException(
             status_code=400,
-            detail=f"Invalid file type: {file.content_type}. Allowed: PDF, DOC, DOCX",
+            detail=f"Invalid file type: {file.content_type}. Allowed: PDF, DOC, DOCX, MD",
         )
 
     # Read and validate size
@@ -328,15 +329,26 @@ async def upload_resume(file: UploadFile = File(...)) -> ResumeUploadResponse:
     if len(content) == 0:
         raise HTTPException(status_code=400, detail="Empty file")
 
-    # Convert to markdown
-    try:
-        markdown_content = await parse_document(content, file.filename or "resume.pdf")
-    except Exception as e:
-        logger.error(f"Document parsing failed: {e}")
-        raise HTTPException(
-            status_code=422,
-            detail="Failed to parse document. Please ensure it's a valid PDF or DOCX file.",
-        )
+    # Convert to markdown (skip conversion for .md files — already markdown)
+    filename = file.filename or "resume.pdf"
+    suffix = Path(filename).suffix.lower()
+    if suffix in (".md", ".markdown"):
+        try:
+            markdown_content = content.decode("utf-8")
+        except UnicodeDecodeError:
+            raise HTTPException(
+                status_code=422,
+                detail="Failed to read Markdown file. Please ensure it's valid UTF-8 text.",
+            )
+    else:
+        try:
+            markdown_content = await parse_document(content, filename)
+        except Exception as e:
+            logger.error(f"Document parsing failed: {e}")
+            raise HTTPException(
+                status_code=422,
+                detail="Failed to parse document. Please ensure it's a valid PDF or DOCX file.",
+            )
 
     # Store in database first with "processing" status (atomic master assignment)
     resume = await db.create_resume_atomic_master(

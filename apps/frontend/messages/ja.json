@@ -95,7 +95,7 @@
       "parsingFailed": "履歴書はアップロードされましたが、AI解析に失敗しました。手動でカスタマイズすることは可能です。",
       "failed": "アップロードに失敗しました。",
       "dropzoneTitle": "クリックまたはファイルをドラッグ",
-      "dropzoneSubtitle": "PDF、DOC、DOCX（最大 4MB）",
+      "dropzoneSubtitle": "PDF、DOC、DOCX、MD（最大 4MB）",
       "tryDifferentFile": "別のファイルを試す",
       "parsingFailedKeepOpen": "AI 解析に失敗しました。別のファイルを試すか、このダイアログを閉じてください。"
     }
