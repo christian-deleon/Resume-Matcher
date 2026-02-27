@@ -453,44 +453,39 @@ export default function DashboardPage() {
         {/* 2. Tailored Resumes */}
         {tailoredResumes.map((resume) => {
           const title =
-            resume.title ||
-            resume.jobSnippet ||
-            resume.filename ||
-            t('dashboard.tailoredResume');
+            resume.title || resume.jobSnippet || resume.filename || t('dashboard.tailoredResume');
           const color = cardPalette[hashTitle(title) % cardPalette.length];
           return (
-          <Card
-            key={resume.resume_id}
-            variant="interactive"
-            className="aspect-square h-full bg-canvas"
-            onClick={() => router.push(`/resumes/${resume.resume_id}`)}
-          >
-            <div className="flex-1 flex flex-col">
-              <div className="flex justify-between items-start mb-6">
-                <div
-                  className="w-12 h-12 border-2 border-black flex items-center justify-center"
-                  style={{ backgroundColor: color.bg, color: color.fg }}
-                >
-                  <span className="font-mono font-bold">
-                    {getMonogram(title)}
+            <Card
+              key={resume.resume_id}
+              variant="interactive"
+              className="aspect-square h-full bg-canvas"
+              onClick={() => router.push(`/resumes/${resume.resume_id}`)}
+            >
+              <div className="flex-1 flex flex-col">
+                <div className="flex justify-between items-start mb-6">
+                  <div
+                    className="w-12 h-12 border-2 border-black flex items-center justify-center"
+                    style={{ backgroundColor: color.bg, color: color.fg }}
+                  >
+                    <span className="font-mono font-bold">{getMonogram(title)}</span>
+                  </div>
+                  <span className="font-mono text-xs text-gray-500 uppercase">
+                    {resume.processing_status}
                   </span>
                 </div>
-                <span className="font-mono text-xs text-gray-500 uppercase">
-                  {resume.processing_status}
-                </span>
+                <CardTitle className="text-lg">
+                  <span className="block font-serif text-base font-bold leading-tight mb-1 w-full line-clamp-2">
+                    {title}
+                  </span>
+                </CardTitle>
+                <CardDescription className="mt-auto pt-4 uppercase">
+                  {t('dashboard.edited', {
+                    date: formatDate(resume.updated_at || resume.created_at),
+                  })}{' '}
+                </CardDescription>
               </div>
-              <CardTitle className="text-lg">
-                <span className="block font-serif text-base font-bold leading-tight mb-1 w-full line-clamp-2">
-                  {title}
-                </span>
-              </CardTitle>
-              <CardDescription className="mt-auto pt-4 uppercase">
-                {t('dashboard.edited', {
-                  date: formatDate(resume.updated_at || resume.created_at),
-                })}{' '}
-              </CardDescription>
-            </div>
-          </Card>
+            </Card>
           );
         })}
 

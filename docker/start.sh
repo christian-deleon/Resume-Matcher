@@ -138,11 +138,11 @@ cd /app/frontend
 
 # Next.js uses PORT environment variable
 export PORT="${FRONTEND_PORT}"
-if [ "$NODE_ENV" = "development" ]; then
-    npm run dev &
-else
-    npm start &
+if [ ! -f "server.js" ]; then
+    error "Missing frontend standalone server.js. Rebuild the Docker image."
+    exit 1
 fi
+node server.js &
 FRONTEND_PID=$!
 
 echo ""
@@ -161,4 +161,3 @@ echo ""
 
 # Wait for processes
 wait $FRONTEND_PID
-
