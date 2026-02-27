@@ -175,6 +175,47 @@ export async function updateFeatureConfig(config: FeatureConfigUpdate): Promise<
   return res.json();
 }
 
+// Resume parsing configuration types
+export interface ResumeParsingConfig {
+  preserve_months: boolean;
+}
+
+export interface ResumeParsingConfigUpdate {
+  preserve_months?: boolean;
+}
+
+// Fetch resume parsing configuration
+export async function fetchResumeParsingConfig(): Promise<ResumeParsingConfig> {
+  const res = await apiFetch('/config/resume-parsing', { credentials: 'include' });
+
+  if (!res.ok) {
+    throw new Error(`Failed to load resume parsing config (status ${res.status}).`);
+  }
+
+  return res.json();
+}
+
+// Update resume parsing configuration
+export async function updateResumeParsingConfig(
+  config: ResumeParsingConfigUpdate
+): Promise<ResumeParsingConfig> {
+  const res = await apiFetch('/config/resume-parsing', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(config),
+  });
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error(
+      data.detail || `Failed to update resume parsing config (status ${res.status}).`
+    );
+  }
+
+  return res.json();
+}
+
 // Language configuration types
 export type SupportedLanguage = 'en' | 'es' | 'zh' | 'ja' | 'pt';
 

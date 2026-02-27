@@ -18,6 +18,8 @@ from app.schemas import (
     PromptConfigRequest,
     PromptConfigResponse,
     PromptOption,
+    ResumeParsingConfigRequest,
+    ResumeParsingConfigResponse,
     ApiKeyProviderStatus,
     ApiKeyStatusResponse,
     ApiKeysUpdateRequest,
@@ -212,6 +214,33 @@ async def update_feature_config(request: FeatureConfigRequest) -> FeatureConfigR
     return FeatureConfigResponse(
         enable_cover_letter=stored.get("enable_cover_letter", False),
         enable_outreach_message=stored.get("enable_outreach_message", False),
+    )
+
+
+@router.get("/resume-parsing", response_model=ResumeParsingConfigResponse)
+async def get_resume_parsing_config() -> ResumeParsingConfigResponse:
+    """Get current resume parsing configuration."""
+    stored = _load_config()
+
+    return ResumeParsingConfigResponse(
+        preserve_months=stored.get("preserve_months", False),
+    )
+
+
+@router.put("/resume-parsing", response_model=ResumeParsingConfigResponse)
+async def update_resume_parsing_config(
+    request: ResumeParsingConfigRequest,
+) -> ResumeParsingConfigResponse:
+    """Update resume parsing configuration."""
+    stored = _load_config()
+
+    if request.preserve_months is not None:
+        stored["preserve_months"] = request.preserve_months
+
+    _save_config(stored)
+
+    return ResumeParsingConfigResponse(
+        preserve_months=stored.get("preserve_months", False),
     )
 
 

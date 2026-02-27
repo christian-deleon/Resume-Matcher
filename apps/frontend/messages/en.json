@@ -676,6 +676,14 @@
         "description": "Generate a networking message for LinkedIn or email"
       }
     },
+    "resumeParsing": {
+      "title": "Resume Parsing",
+      "description": "Configure how your resume is parsed when uploaded.",
+      "preserveMonths": {
+        "label": "Preserve months in dates",
+        "description": "Keep month and year (e.g., Jan 2020 - Mar 2023) instead of year only (e.g., 2020 - 2023)"
+      }
+    },
     "promptSettings": {
       "title": "Prompt Settings",
       "description": "Choose the default prompt used for resume tailoring.",

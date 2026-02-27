@@ -88,6 +88,24 @@ RESUME_SCHEMA_EXAMPLE = """{
   }
 }"""
 
+_DATE_RULES_YEARS_ONLY = """- Format years as "YYYY - YYYY" or "YYYY - Present"
+- Normalize dates: "Jan 2020" → "2020", "2020-2021" → "2020 - 2021", "Current"/"Ongoing" → "Present"
+- For ambiguous dates like "3 years experience", infer approximate years from context or use "~YYYY"
+- Flag overlapping dates (concurrent roles) by preserving both, don't merge"""
+
+_DATE_RULES_PRESERVE_MONTHS = """- Format dates as "MMM YYYY - MMM YYYY" or "MMM YYYY - Present" when months are available (e.g., "Jan 2020 - Mar 2023")
+- If only years are present in the original, keep as "YYYY - YYYY" or "YYYY - Present"
+- Normalize: "January 2020" → "Jan 2020", "2020-2021" → "2020 - 2021", "Current"/"Ongoing" → "Present"
+- Preserve the original level of date precision (don't add months if only years exist, don't drop months if they exist)
+- For ambiguous dates like "3 years experience", infer approximate years from context or use "~YYYY"
+- Flag overlapping dates (concurrent roles) by preserving both, don't merge"""
+
+
+def get_date_rules(preserve_months: bool) -> str:
+    """Return date formatting rules based on user preference."""
+    return _DATE_RULES_PRESERVE_MONTHS if preserve_months else _DATE_RULES_YEARS_ONLY
+
+
 PARSE_RESUME_PROMPT = """Parse this resume into JSON. Output ONLY the JSON object, no other text.
 
 Map content to standard sections when possible. For non-standard sections (like Publications, Volunteer Work, Research, Hobbies), add them to customSections with an appropriate type.
@@ -103,12 +121,9 @@ Custom section types:
 Rules:
 - Use "" for missing text fields, [] for missing arrays, null for optional fields
 - Number IDs starting from 1
-- Format years as "YYYY - YYYY" or "YYYY - Present"
+{date_rules}
 - Use snake_case for custom section keys (e.g., "volunteer_work", "publications")
 - Preserve the original section name as a descriptive key
-- Normalize dates: "Jan 2020" → "2020", "2020-2021" → "2020 - 2021", "Current"/"Ongoing" → "Present"
-- For ambiguous dates like "3 years experience", infer approximate years from context or use "~YYYY"
-- Flag overlapping dates (concurrent roles) by preserving both, don't merge
 
 Resume to parse:
 {resume_text}"""

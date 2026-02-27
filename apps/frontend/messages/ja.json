@@ -676,6 +676,14 @@
         "description": "LinkedIn やメール向けのネットワーキングメッセージを生成します"
       }
     },
+    "resumeParsing": {
+      "title": "履歴書の解析",
+      "description": "アップロード時の履歴書の解析方法を設定します。",
+      "preserveMonths": {
+        "label": "日付の月を保持する",
+        "description": "年のみ（例: 2020 - 2023）ではなく、月と年（例: 2020年1月 - 2023年3月）を保持します"
+      }
+    },
     "promptSettings": {
       "title": "プロンプト設定",
       "description": "履歴書カスタマイズで使う既定のプロンプトを選択します。",

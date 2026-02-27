@@ -568,6 +568,18 @@ class FeatureConfigResponse(BaseModel):
     enable_outreach_message: bool = False
 
 
+class ResumeParsingConfigRequest(BaseModel):
+    """Request to update resume parsing settings."""
+
+    preserve_months: bool | None = None
+
+
+class ResumeParsingConfigResponse(BaseModel):
+    """Response for resume parsing settings."""
+
+    preserve_months: bool = False
+
+
 class LanguageConfigRequest(BaseModel):
     """Request to update language settings."""
 

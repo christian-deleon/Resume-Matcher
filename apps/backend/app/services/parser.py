@@ -1,15 +1,33 @@
 """Document parsing service using markitdown and LLM."""
 
+import json
+import logging
 import tempfile
 from pathlib import Path
 from typing import Any
 
 from markitdown import MarkItDown
 
+from app.config import settings
 from app.llm import complete_json
-from app.prompts import PARSE_RESUME_PROMPT
+from app.prompts import PARSE_RESUME_PROMPT, get_date_rules
 from app.prompts.templates import RESUME_SCHEMA_EXAMPLE
 from app.schemas import ResumeData
+
+logger = logging.getLogger(__name__)
+
+
+def _get_preserve_months() -> bool:
+    """Read the preserve_months setting from config."""
+    config_path = settings.config_path
+    if not config_path.exists():
+        return False
+    try:
+        config = json.loads(config_path.read_text())
+        return config.get("preserve_months", False)
+    except (json.JSONDecodeError, OSError) as e:
+        logger.warning("Failed to read config for preserve_months: %s", e)
+        return False
 
 
 async def parse_document(content: bytes, filename: str) -> str:
@@ -46,8 +64,12 @@ async def parse_resume_to_json(markdown_text: str) -> dict[str, Any]:
     Returns:
         Structured resume data matching ResumeData schema
     """
+    preserve_months = _get_preserve_months()
+    date_rules = get_date_rules(preserve_months)
+
     prompt = PARSE_RESUME_PROMPT.format(
         schema=RESUME_SCHEMA_EXAMPLE,
+        date_rules=date_rules,
         resume_text=markdown_text,
     )
 

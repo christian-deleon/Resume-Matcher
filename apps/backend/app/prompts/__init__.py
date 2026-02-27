@@ -9,6 +9,7 @@ from app.prompts.templates import (
     IMPROVE_RESUME_PROMPT,
     IMPROVE_RESUME_PROMPTS,
     PARSE_RESUME_PROMPT,
+    get_date_rules,
     get_language_name,
 )
 
@@ -21,5 +22,6 @@ __all__ = [
     "DEFAULT_IMPROVE_PROMPT_ID",
     "CRITICAL_TRUTHFULNESS_RULES",
     "GENERATE_TITLE_PROMPT",
+    "get_date_rules",
     "get_language_name",
 ]

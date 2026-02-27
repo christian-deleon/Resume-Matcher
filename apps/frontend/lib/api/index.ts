@@ -41,6 +41,8 @@ export {
   PROVIDER_INFO,
   fetchPromptConfig,
   updatePromptConfig,
+  fetchResumeParsingConfig,
+  updateResumeParsingConfig,
   type LLMProvider,
   type LLMConfig,
   type LLMConfigUpdate,
@@ -50,4 +52,6 @@ export {
   type PromptOption,
   type PromptConfig,
   type PromptConfigUpdate,
+  type ResumeParsingConfig,
+  type ResumeParsingConfigUpdate,
 } from './config';

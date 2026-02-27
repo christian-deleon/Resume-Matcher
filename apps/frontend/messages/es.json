@@ -676,6 +676,14 @@
         "description": "Genera un mensaje de networking para LinkedIn o correo electrónico"
       }
     },
+    "resumeParsing": {
+      "title": "Análisis del currículum",
+      "description": "Configura cómo se analiza tu currículum al subirlo.",
+      "preserveMonths": {
+        "label": "Preservar meses en las fechas",
+        "description": "Mantener mes y año (ej., Ene 2020 - Mar 2023) en lugar de solo el año (ej., 2020 - 2023)"
+      }
+    },
     "promptSettings": {
       "title": "Configuración de Prompts",
       "description": "Elige el prompt predeterminado para personalizar el currículum.",

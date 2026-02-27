@@ -11,6 +11,8 @@ import {
   updateFeatureConfig,
   fetchPromptConfig,
   updatePromptConfig,
+  fetchResumeParsingConfig,
+  updateResumeParsingConfig,
   clearAllApiKeys,
   resetDatabase,
   PROVIDER_INFO,
@@ -47,6 +49,7 @@ import {
   Globe,
   Trash2,
   AlertTriangle,
+  CalendarDays,
 } from 'lucide-react';
 import { useLanguage } from '@/lib/context/language-context';
 import { useTranslations } from '@/lib/i18n';
@@ -123,6 +126,10 @@ export default function SettingsPage() {
   const [promptConfigLoading, setPromptConfigLoading] = useState(false);
   const [promptOptions, setPromptOptions] = useState<PromptOption[]>([]);
   const [defaultPromptId, setDefaultPromptId] = useState('keywords');
+
+  // Resume parsing config state
+  const [preserveMonths, setPreserveMonths] = useState(false);
+  const [parsingConfigLoading, setParsingConfigLoading] = useState(false);
 
   // Danger Zone state
   const [showClearApiKeysDialog, setShowClearApiKeysDialog] = useState(false);
@@ -235,10 +242,11 @@ export default function SettingsPage() {
 
     async function loadConfig() {
       try {
-        const [llmConfig, featureConfig, promptConfig] = await Promise.all([
+        const [llmConfig, featureConfig, promptConfig, parsingConfig] = await Promise.all([
           fetchLlmConfig().catch(() => null),
           fetchFeatureConfig().catch(() => null),
           fetchPromptConfig().catch(() => null),
+          fetchResumeParsingConfig().catch(() => null),
         ]);
 
         if (cancelled) return;
@@ -268,6 +276,10 @@ export default function SettingsPage() {
         if (promptConfig) {
           setPromptOptions(promptConfig.prompt_options || []);
           setDefaultPromptId(promptConfig.default_prompt_id || 'keywords');
+        }
+
+        if (parsingConfig) {
+          setPreserveMonths(parsingConfig.preserve_months);
         }
 
         setStatus('idle');
@@ -412,6 +424,20 @@ export default function SettingsPage() {
       setError((err as Error).message || t('settings.errors.unableToSaveConfiguration'));
     } finally {
       setPromptConfigLoading(false);
+    }
+  };
+
+  // Update resume parsing config
+  const handleParsingConfigChange = async (value: boolean) => {
+    setParsingConfigLoading(true);
+    try {
+      const updated = await updateResumeParsingConfig({ preserve_months: value });
+      setPreserveMonths(updated.preserve_months);
+    } catch (err) {
+      console.error('Failed to update resume parsing config', err);
+      setPreserveMonths(!value);
+    } finally {
+      setParsingConfigLoading(false);
     }
   };
 
@@ -946,6 +972,35 @@ export default function SettingsPage() {
                   label={t('settings.promptSettings.title')}
                   description={t('settings.promptSettings.description')}
                   disabled={promptConfigLoading}
+                />
+              </div>
+            </div>
+          </section>
+
+          {/* Resume Parsing Section */}
+          <section className="space-y-6">
+            <div className="flex items-center gap-2 border-b border-black/10 pb-2">
+              <CalendarDays className="w-4 h-4" />
+              <h2 className="font-mono text-sm font-bold uppercase tracking-wider">
+                {t('settings.resumeParsing.title')}
+              </h2>
+            </div>
+
+            <div className="space-y-2">
+              <p className="text-sm text-gray-600 mb-4">
+                {t('settings.resumeParsing.description')}
+              </p>
+
+              <div className="space-y-3">
+                <ToggleSwitch
+                  checked={preserveMonths}
+                  onCheckedChange={(checked) => {
+                    setPreserveMonths(checked);
+                    handleParsingConfigChange(checked);
+                  }}
+                  label={t('settings.resumeParsing.preserveMonths.label')}
+                  description={t('settings.resumeParsing.preserveMonths.description')}
+                  disabled={parsingConfigLoading}
                 />
               </div>
             </div>

@@ -676,6 +676,14 @@
         "description": "生成用于 LinkedIn 或邮件的社交/外联消息"
       }
     },
+    "resumeParsing": {
+      "title": "简历解析",
+      "description": "配置上传简历时的解析方式。",
+      "preserveMonths": {
+        "label": "保留日期中的月份",
+        "description": "保留月份和年份（例如 2020年1月 - 2023年3月），而非仅保留年份（例如 2020 - 2023）"
+      }
+    },
     "promptSettings": {
       "title": "提示词设置",
       "description": "选择用于简历定制的默认提示词。",
