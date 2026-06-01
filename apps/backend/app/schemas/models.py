@@ -173,6 +173,15 @@ class Project(BaseModel):
     website: str | None = None
     description: list[str] = Field(default_factory=list)
 
+    @field_validator("name", "role", "years", mode="before")
+    @classmethod
+    def _normalize_text_fields(cls, value: Any) -> str:
+        # LLMs routinely emit ``null`` for fields they can't fill (e.g. a
+        # project with no distinct role). These are non-optional strings, so
+        # a bare ``null`` would fail validation and sink the whole ResumeData
+        # parse. Coerce to text the same way ``summary`` already does.
+        return _coerce_text(value)
+
     @field_validator("description", mode="before")
     @classmethod
     def _normalize_description(cls, value: Any) -> list[str]:
